@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Máscara de Troubleshooting N1</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    max-width: 700px;
+    margin: 20px auto;
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 8px;
+    color: #222;
+  }
+  h1, h2 {
+    color: #004080;
+  }
+  label {
+    cursor: pointer;
+  }
+  .section {
+    background: #fff;
+    border-radius: 6px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  }
+  .checkbox-group {
+    margin-bottom: 12px;
+  }
+  .checkbox-group input {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  textarea {
+    width: 100%;
+    height: 80px;
+    resize: vertical;
+    font-size: 14px;
+    padding: 8px;
+  }
+  input[type="text"] {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  select {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 14px;
+    margin-top: 4px;
+  }
+  .teste-lista {
+    margin-top: 10px;
+  }
+  .opcao-peca {
+    margin-bottom: 10px;
+  }
+  .footer-note {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 15px;
+    font-style: italic;
+  }
+  button {
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-right: 10px;
+  }
+  button:hover {
+    opacity: 0.9;
+  }
+  .btn-gerar {
+    background-color: #004080;
+  }
+  .btn-limpar {
+    background-color: #b30000;
+  }
+  #resultado {
+    width: 100%;
+    height: 320px;
+    font-family: monospace;
+    white-space: pre-wrap;
+    background: #e9e9e9;
+    border-radius: 6px;
+    padding: 15px;
+    resize: vertical;
+  }
+  /* Botão remover testes */
+  #btn-remover-testes {
+    background-color: #b30000;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+  #btn-remover-testes:hover {
+    opacity: 0.9;
+  }
+</style>
+</head>
+<body>
+
+<h1>N1 – MÁSCARA DE TROUBLESHOOTING</h1>
+
+<div class="section">
+  <h2>INFORMAÇÕES SOBRE O CLIENTE</h2>
+
+  <div class="checkbox-group">
+    <label><input type="checkbox" id="ts-voke" checked /> Este Cliente tem troubleshooting Voke</label><br />
+    <label><input type="checkbox" id="acesso-remoto" checked /> Temos acesso remoto</label><br />
+    <label><input type="checkbox" id="ts-elegivel" checked /> Troubleshooting elegível</label>
+  </div>
+
+  <p><strong>OBS:</strong> Informações Base Conhecimento ORIENTAÇÕES = N1 (Básicas)</p>
+</div>
+
+<div class="section">
+  <h2>DEFINIÇÃO DO PROBLEMA</h2>
+  <label for="descricao-problema">O que está ocorrendo:</label><br />
+  <textarea id="descricao-problema" placeholder="Descreva o problema aqui..."></textarea>
+</div>
+
+<div class="section">
+  <h2>TESTES REALIZADOS</h2>
+  <label for="testes-realizados">Descreva os testes realizados:</label><br />
+  <textarea id="testes-realizados" placeholder="Selecione os testes abaixo ou descreva o que foi realizado"></textarea>
+
+  <div class="teste-lista">
+    <label for="testes-basicos">Selecione testes básicos a realizar:</label><br />
+    <select id="testes-basicos" onchange="adicionarTeste()">
+      <option value="">-- Testes realizados --</option>
+
+      <option disabled>🖥️ Equipamento travando</option>
+      <option value="Teste via BIOS e site do fabricante identificou falha em componentes.">Teste via BIOS e site do fabricante identificou falha em componentes.</option>
+      <option value="Verificado desempenho dos componentes no gerenciador de tarefas">Verificado desempenho dos componentes no gerenciador de tarefas</option>
+      <option value="Foi realizado acesso remoto para limpeza dos arquivos temporários (temp)">Foi realizado acesso remoto para limpeza dos arquivos temporários (temp)</option>
+
+      <option disabled>📶 Falha na conexão</option>
+      <option value="Foi verificado o sinal da operadora">Foi verificado o sinal da operadora</option>
+      <option value="Foi verificado se outros equipamentos apresentavam o mesmo problema">Foi verificado se outros equipamentos apresentavam o mesmo problema</option>
+      <option value="Foi verificado se as luzes do painel estavam piscando de modo estranho">Foi verificado se as luzes do painel estavam piscando de modo estranho</option>
+
+      <option disabled>📱 Falhas no touchscreen</option>
+      <option value="Foi verificada a presença de capa protetora na tela">Foi verificada a presença de capa protetora na tela</option>
+      <option value="Foi realizado reinício do tablet">Foi realizado reinício do tablet</option>
+
+      <option disabled>🖥️ Imagem colorida</option>
+      <option value="Foi verificado o cabo de dados (VGA - HDMI - DVI)">Foi verificado o cabo de dados (VGA - HDMI - DVI)</option>
+      <option value="Foi verificado o input do monitor">Foi verificado o input do monitor</option>
+      <option value="O monitor foi ligado em outro equipamento">O monitor foi ligado em outro equipamento</option>
+
+      <option disabled>🖥️ Lentidão e travamento</option>
+      <option value="Foram realizados testes de memória, HD, CPU e vídeo">Foram realizados testes de memória, HD, CPU e vídeo</option>
+      <option value="Foi verificada a temperatura do processador">Foi verificada a temperatura do processador</option>
+      <option value="Foi verificado se a lentidão ocorre em algum software específico">Foi verificado se a lentidão ocorre em algum software específico</option>
+
+      <option disabled>💡 Liga e não gera imagem</option>
+      <option value="Foi validada a rede elétrica">Foi validada a rede elétrica</option>
+      <option value="Foi realizada limpeza na memória">Foi realizada limpeza na memória</option>
+      <option value="A bateria da CMOS foi removida e recolocada">A bateria da CMOS foi removida e recolocada</option>
+
+      <option disabled>❗ Mensagem de erro</option>
+      <option value="Foram realizados testes de memória, HD, CPU e vídeo">Foram realizados testes de memória, HD, CPU e vídeo</option>
+      <option value="Foi verificada a temperatura do processador">Foi verificada a temperatura do processador</option>
+      <option value="Foi verificado se o erro ocorre em algum software específico">Foi verificado se o erro ocorre em algum software específico</option>
+
+      <option disabled>🌐 Não acessa a rede</option>
+      <option value="Foi verificado se o cabo de rede estava conectado">Foi verificado se o cabo de rede estava conectado</option>
+      <option value="Foi verificado se os LEDs da placa estavam acesos">Foi verificado se os LEDs da placa estavam acesos</option>
+      <option value="Foi verificado se havia outro micro com o mesmo problema">Foi verificado se havia outro micro com o mesmo problema</option>
+
+      <option disabled>🔋 Não carrega</option>
+      <option value="Foi validada a rede elétrica">Foi validada a rede elétrica</option>
+      <option value="Foi verificado o AC-Adapter">Foi verificado o AC-Adapter</option>
+      <option value="Foi verificado se o cabo USB estava rompido ou danificado">Foi verificado se o cabo USB estava rompido ou danificado</option>
+
+      <option disabled>⚙️ Não inicia</option>
+      <option value="Foram verificadas as opções de inicialização">Foram verificadas as opções de inicialização</option>
+      <option value="Foram realizados testes de memória, HD, CPU e vídeo">Foram realizados testes de memória, HD, CPU e vídeo</option>
+      <option value="Foi realizado teste de desmagnetização">Foi realizado teste de desmagnetização</option>
+
+      <option disabled>⚠️ Qualquer falha diferente de não liga</option>
+      <option value="Foram verificados os LEDs do equipamento">Foram verificados os LEDs do equipamento</option>
+      <option value="Foram verificados os bips do equipamento">Foram verificados os bips do equipamento</option>
+      <option value="Foi verificado se o nobreak estava com itens além da capacidade">Foi verificado se o nobreak estava com itens além da capacidade</option>
+
+      <option disabled>🖱️ Touchpad inoperante</option>
+      <option value="Foi desmagnetizado o notebook">Foi desmagnetizado o notebook</option>
+      <option value="Foi solicitada a limpeza do touchpad">Foi solicitada a limpeza do touchpad</option>
+      <option value="Foi verificado se o touchpad estava ativado">Foi verificado se o touchpad estava ativado</option>
+    </select>
+  </div>
+
+  <div id="
+
+<div class="btn-container">
+      <button type="reset" class="reset-btn" onclick="limparCampos()">🧹 Limpar testes</button>
+    </div>
+  </div>
+  
+  <style>
+  .copy-btn {
+    background-color: #0056a3; /* Azul */
+    color: white;
+  }
+
+  .reset-btn {
+    background-color: #0056a3; /* Azul também */
+    color: white;
+  }
+</style>
+
+  <script>
+    function adicionarTeste() {
+      const select = document.getElementById("testes");
+      const textarea = document.getElementById("descricao");
+
+      if (select.value) {
+        textarea.value += (textarea.value ? "\n" : "") + select.value;
+        select.value = ""; // reseta seleção
+      }
+    }
+
+    function copiarTestes() {
+      const textarea = document.getElementById("descricao");
+      textarea.select();
+      document.execCommand("copy");
+      alert("Testes copiados para a área de transferência!");
+    }
+
+    function limparCampos() {
+      document.getElementById("descricao").value = "";
+      document.getElementById("testes").value = "";
+    }
+  </script>
+
+  <div id="lista-testes-selecionados" style="margin-top:12px;">
+    <!-- Testes selecionados aparecem aqui -->
+  </div>
+</div>
+
+<div class="section">
+  <h2>ENVIADO PARA FIELD OU PARCEIRO</h2>
+  <label for="enviado-para">Destino:</label><br />
+  <input type="text" id="enviado-para" placeholder="Parceiros/Field" />
+</div>
+
+<div class="section">
+  <h2>Solicito visita de técnico no local com:</h2>
+
+  <div class="opcao-peca">
+    <label for="peca1">1º Opção – Peça / Equipamento:</label><br />
+    <input type="text" id="peca1" placeholder="(peça ou equipamento para troca)" />
+  </div>
+
+  <div class="opcao-peca">
+    <label for="peca2">2º Opção – Peça / Equipamento:</label><br />
+    <input type="text" id="peca2" placeholder="(quando há possibilidade de atendimento sem peça/equipamento)" />
+  </div>
+
+  <div class="opcao-peca">
+    <label for="peca3">3º Opção – Peça / Equipamento:</label><br />
+    <input type="text" id="peca3" placeholder="(quando há possibilidade de atendimento sem peça/equipamento)" />
+  </div>
+</div>
+
+<button class="btn-gerar" onclick="gerarTexto()">Gerar texto para copiar</button>
+<button type="button" class="btn-limpar" onclick="limparCampos()">Limpar campos</button>
+
+<textarea id="resultado" readonly placeholder="Aqui aparecerá a máscara formatada para copiar..."></textarea>
+
+<script>
+  function adicionarTeste() {
+    const select = document.getElementById('testes-basicos');
+    const valor = select.value;
+    if (!valor) return;
+
+    const lista = document.getElementById('lista-testes-selecionados');
+
+    const testesExistentes = Array.from(lista.querySelectorAll('label')).map(lbl => lbl.textContent);
+    if (testesExistentes.includes(valor)) {
+      alert('Teste já selecionado.');
+      select.value = '';
+      return;
+    }
+
+    const idCheckbox = 'teste_' + valor.toLowerCase().replace(/\s+/g, '_').replace(/[^\w\-]/g, '');
+
+    const div = document.createElement('div');
+    div.className = 'checkbox-group';
+    div.innerHTML = `
+      <label><input type="checkbox" id="${idCheckbox}" checked /> ${valor}</label>
+    `;
+    lista.appendChild(div);
+    select.value = '';
+  }
+
+  function gerarTexto() {
+    const tsVoke = document.getElementById('ts-voke').checked ? 'X' : ' ';
+    const acessoRemoto = document.getElementById('acesso-remoto').checked ? 'X' : ' ';
+    const tsElegivel = document.getElementById('ts-elegivel').checked ? 'X' : ' ';
+
+    const problema = document.getElementById('descricao-problema').value.trim() || '---';
+    const testesRealizados = document.getElementById('testes-realizados').value.trim() || '---';
+
+    const testesSelecionadosElems = document.querySelectorAll('#lista-testes-selecionados input[type="checkbox"]');
+    let testesBasicos = [];
+    testesSelecionadosElems.forEach(checkbox => {
+      if (checkbox.checked) {
+        const label = checkbox.parentNode.textContent.trim();
+        testesBasicos.push(label);
+      }
+    });
+    const testesBasicosTexto = testesBasicos.length > 0 ? testesBasicos.map(t => '- ' + t).join('\n') : 'Nenhum teste básico selecionado.';
+
+    const enviadoPara = document.getElementById('enviado-para').value.trim() || '---';
+    const peca1 = document.getElementById('peca1').value.trim() || '---';
+    const peca2 = document.getElementById('peca2').value.trim() || '---';
+    const peca3 = document.getElementById('peca3').value.trim() || '---';
+
+    const texto = 
+`N1 – MÁSCARA DE TROUBLESHOOTING  
+
+INFORMAÇÕES SOBRE O CLIENTE 
+
+Este Cliente tem troubleshooting Voke: [${tsVoke}] Sim [${tsVoke === ' ' ? 'X' : ' '}] Não 
+
+Temos acesso remoto: [${acessoRemoto}] Sim [${acessoRemoto === ' ' ? 'X' : ' '}] Não 
+
+Troubleshooting elegível: [${tsElegivel}] Sim [${tsElegivel === ' ' ? 'X' : ' '}] Não 
+
+OBS: Informações Base Conhecimento ORIENTAÇÕES = N1 (Básicas)  
+
+
+DEFINIÇÃO DO PROBLEMA 
+
+O que está ocorrendo: ${problema}
+
+TESTES REALIZADOS: ${testesRealizados}
+
+${testesBasicosTexto}
+
+ENVIADO PARA FIELD OU PARCEIRO: ${enviadoPara}
+
+
+Solicito visita de técnico no local com: 
+
+ - 1º Opção – Peça / Equipamento: ${peca1}
+
+ - 2º Opção – Peça / Equipamento: ${peca2}
+
+ - 3º Opção – Peça / Equipamento: ${peca3}
+`;
+
+    const resultadoElem = document.getElementById('resultado');
+    resultadoElem.value = texto;
+    resultadoElem.focus();
+    resultadoElem.select();
+  }
+
+  function limparCampos() {
+    document.getElementById('ts-voke').checked = false;
+    document.getElementById('acesso-remoto').checked = false;
+    document.getElementById('ts-elegivel').checked = false;
+
+    document.getElementById('descricao-problema').value = '';
+    document.getElementById('testes-realizados').value = '';
+    document.getElementById('testes-basicos').value = '';
+    document.getElementById('enviado-para').value = '';
+    document.getElementById('peca1').value = '';
+    document.getElementById('peca2').value = '';
+    document.getElementById('peca3').value = '';
+
+    document.getElementById('lista-testes-selecionados').innerHTML = '';
+    document.getElementById('resultado').value = '';
+  }
+</script>
+
+</body>
+</html>
