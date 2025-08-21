@@ -246,16 +246,6 @@
     <label for="peca1">1º Opção – Peça / Equipamento:</label><br />
     <input type="text" id="peca1" placeholder="(peça ou equipamento para troca)" />
   </div>
-
-  <div class="opcao-peca">
-    <label for="peca2">2º Opção – Peça / Equipamento:</label><br />
-    <input type="text" id="peca2" placeholder="(quando há possibilidade de atendimento sem peça/equipamento)" />
-  </div>
-
-  <div class="opcao-peca">
-    <label for="peca3">3º Opção – Peça / Equipamento:</label><br />
-    <input type="text" id="peca3" placeholder="(quando há possibilidade de atendimento sem peça/equipamento)" />
-  </div>
 </div>
 
 <button class="btn-gerar" onclick="gerarTexto()">Gerar texto para copiar</button>
@@ -289,30 +279,35 @@
     select.value = '';
   }
 
-  function gerarTexto() {
-    const tsVoke = document.getElementById('ts-voke').checked ? 'X' : ' ';
-    const acessoRemoto = document.getElementById('acesso-remoto').checked ? 'X' : ' ';
-    const tsElegivel = document.getElementById('ts-elegivel').checked ? 'X' : ' ';
+function gerarTexto() {
+  const tsVoke = document.getElementById('ts-voke').checked ? 'X' : ' ';
+  const acessoRemoto = document.getElementById('acesso-remoto').checked ? 'X' : ' ';
+  const tsElegivel = document.getElementById('ts-elegivel').checked ? 'X' : ' ';
 
-    const problema = document.getElementById('descricao-problema').value.trim() || '---';
-    const testesRealizados = document.getElementById('testes-realizados').value.trim() || ' ';
+  const problema = document.getElementById('descricao-problema').value.trim() || '---';
+  const testesRealizados = document.getElementById('testes-realizados').value.trim() || ' ';
 
-    const testesSelecionadosElems = document.querySelectorAll('#lista-testes-selecionados input[type="checkbox"]');
-    let testesBasicos = [];
-    testesSelecionadosElems.forEach(checkbox => {
-      if (checkbox.checked) {
-        const label = checkbox.parentNode.textContent.trim();
-        testesBasicos.push(label);
-      }
-    });
-    const testesBasicosTexto = testesBasicos.length > 0 ? testesBasicos.map(t => '- ' + t).join('\n') : 'Nenhum teste básico selecionado.';
+  const testesSelecionadosElems = document.querySelectorAll('#lista-testes-selecionados input[type="checkbox"]');
+  let testesBasicos = [];
+  testesSelecionadosElems.forEach(checkbox => {
+    if (checkbox.checked) {
+      const label = checkbox.parentNode.textContent.trim();
+      testesBasicos.push(label);
+    }
+  });
+  const testesBasicosTexto = testesBasicos.length > 0 ? testesBasicos.map(t => '- ' + t).join('\n') : ' ';
 
-    const enviadoPara = document.getElementById('enviado-para').value.trim() || '---';
-    const peca1 = document.getElementById('peca1').value.trim() || '---';
-    const peca2 = document.getElementById('peca2').value.trim() || '---';
-    const peca3 = document.getElementById('peca3').value.trim() || '---';
+  const enviadoPara = document.getElementById('enviado-para').value.trim() || '---';
 
-    const texto = 
+  // Aqui está a correção
+  const peca2Elem = document.getElementById('peca2');
+  const peca3Elem = document.getElementById('peca3');
+
+  const peca1 = document.getElementById('peca1').value.trim() || '---';
+  const peca2 = peca2Elem ? peca2Elem.value.trim() : '---';
+  const peca3 = peca3Elem ? peca3Elem.value.trim() : '---';
+
+  const texto = 
 `N1 – MÁSCARA DE TROUBLESHOOTING  
 
 INFORMAÇÕES SOBRE O CLIENTE 
@@ -341,16 +336,13 @@ Solicito visita de técnico no local com:
 
  - 1º Opção – Peça / Equipamento: ${peca1}
 
- - 2º Opção – Peça / Equipamento: ${peca2}
-
- - 3º Opção – Peça / Equipamento: ${peca3}
 `;
 
-    const resultadoElem = document.getElementById('resultado');
-    resultadoElem.value = texto;
-    resultadoElem.focus();
-    resultadoElem.select();
-  }
+  const resultadoElem = document.getElementById('resultado');
+  resultadoElem.value = texto;
+  resultadoElem.focus();
+  resultadoElem.select();
+}
 
   function limparCampos() {
     document.getElementById('ts-voke').checked = false;
@@ -362,8 +354,6 @@ Solicito visita de técnico no local com:
     document.getElementById('testes-basicos').value = '';
     document.getElementById('enviado-para').value = '';
     document.getElementById('peca1').value = '';
-    document.getElementById('peca2').value = '';
-    document.getElementById('peca3').value = '';
 
     document.getElementById('lista-testes-selecionados').innerHTML = '';
     document.getElementById('resultado').value = '';
@@ -372,4 +362,3 @@ Solicito visita de técnico no local com:
 
 </body>
 </html>
-
