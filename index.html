@@ -295,7 +295,7 @@
     const tsElegivel = document.getElementById('ts-elegivel').checked ? 'X' : ' ';
 
     const problema = document.getElementById('descricao-problema').value.trim() || '---';
-    const testesRealizados = document.getElementById('testes-realizados').value.trim() || ':';
+    const testesRealizados = document.getElementById('testes-realizados').value.trim() || ' ';
 
     const testesSelecionadosElems = document.querySelectorAll('#lista-testes-selecionados input[type="checkbox"]');
     let testesBasicos = [];
@@ -372,3 +372,4 @@ Solicito visita de técnico no local com:
 
 </body>
 </html>
+
