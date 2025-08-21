@@ -204,23 +204,6 @@
 
   <div id="
 
-<div class="btn-container">
-      <button type="reset" class="reset-btn" onclick="limparCampos()">🧹 Limpar testes</button>
-    </div>
-  </div>
-  
-  <style>
-  .copy-btn {
-    background-color: #0056a3; /* Azul */
-    color: white;
-  }
-
-  .reset-btn {
-    background-color: #0056a3; /* Azul também */
-    color: white;
-  }
-</style>
-
   <script>
     function adicionarTeste() {
       const select = document.getElementById("testes");
@@ -312,7 +295,7 @@
     const tsElegivel = document.getElementById('ts-elegivel').checked ? 'X' : ' ';
 
     const problema = document.getElementById('descricao-problema').value.trim() || '---';
-    const testesRealizados = document.getElementById('testes-realizados').value.trim() || '---';
+    const testesRealizados = document.getElementById('testes-realizados').value.trim() || ':';
 
     const testesSelecionadosElems = document.querySelectorAll('#lista-testes-selecionados input[type="checkbox"]');
     let testesBasicos = [];
